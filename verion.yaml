@@ -1,0 +1,21 @@
+# Phase must be a CamelCase
+# Production
+phase: production
+version: 0.0.1
+versionComment: Project Init
+distributor: You
+hotfix: yes
+---
+# Alpha
+phase: alpha
+version: 0.0.1
+versionComment: Project Init
+distributor: You
+hotfix: yes
+---
+# Local
+phase: local
+version: 0.0.1
+versionComment: Project Init
+distributor: You
+hotfix: no

@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    activate:
+      #Spring profile
+      on-profile: local
+    url: jdbc:sqlserver://localhost:1433;DatabaseName=BASEPROJECT_DB;sendStringParametersAsUnicode=false;trustServerCertificate=true
+    #근데 DB유저 정보가 PureString으로 프로젝트에 포함되면 위험하지않나?
+    username: sa
+    password: veryComplexPassword
+    hikari:
+      maximum-pool-size: 3
+      minimum-idle: 1
+      pool-name: baseprojectCP
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0
+    #flyway migration sql 파일 경로, default = classpath:db/migration
+    locations: classpath:migration
+  main:
+    #StartUp 시점에 모든 Bean을 등록하지 않는 설정
+    #실행속도를 개선할 수 있음 But 어플리케이션의 초기속도가 늦을 수 있음(개발환경에서만 권장)
+    lazy-initialization: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  api-docs:
+    path: /openapi-3.json
+    enabled: true
+
+project:
+  #프론트엔드 빌드 파일 위치
+  frontendLocation: ./client/build
+  #AsyncManager 사용 설정(비동기 작업 처리시 Thread 대신 @Async 사용하기)
+  asyncManager:
+    enabled: false
