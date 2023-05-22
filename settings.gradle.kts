@@ -2,7 +2,9 @@ fun gradleProperty(key: String): String = providers.gradleProperty(key).get()
 
 rootProject.name = gradleProperty("project.name")
 include("app")
-
+include("window")
+include("core")
+include("common")
 
 pluginManagement {
 
@@ -26,3 +28,4 @@ pluginManagement {
         }
     }
 }
+include("core")

@@ -1,8 +1,7 @@
-import org.gradle.configurationcache.extensions.capitalized
 import org.spring.base.build.enum.Phase
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
- plugins {
+plugins {
     id("java")
     kotlin("jvm")
     id("io.spring.dependency-management")
@@ -27,28 +26,6 @@ allprojects {
             exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
             exclude(group = "org.springframework.boot", module = "spring-boot-starter-json")
         }
-    }
-
-    repositories {
-        google()
-        mavenCentral()
-        maven {
-            name = "ImtSoft-Releases"
-            setUrl("https://repo.imtsoft.me/nexus/content/repositories/releases")
-            credentials {
-                username = "anonymous"
-                password = "imtsoft2018!!"
-            }
-        }
-        maven {
-            name = "ImtSoft-Snapshots"
-            setUrl("https://repo.imtsoft.me/nexus/content/repositories/snapshots")
-            credentials {
-                username = "anonymous"
-                password = "imtsoft2018!!"
-            }
-        }
-        maven { setUrl("https://jitpack.io") }
     }
 
     tasks.withType(KotlinCompile::class) {
