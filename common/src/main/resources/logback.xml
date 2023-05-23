@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="true">
+    <logger name="com.zaxxer.hikari.pool.PoolBase" level="ERROR"/>
+    <logger name="com.zaxxer.hikari.pool.HikariPool" level="ERROR"/>
+    <logger name="com.zaxxer.hikari.HikariDataSource" level="ERROR"/>
+
+    <!--log file path-->
+    <property name="HOME_LOG" value="logs/app.log"/>
+
+    <!--log color highlight. go check the LevelHighlight.kt-->
+    <conversionRule conversionWord="levelMark" converterClass="org.spring.base.util.logger.conversion.LevelHighlight"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- %rEx: Exception Stacktrace를 뒤집어주는 역할 -->
+            <pattern>%boldWhite(%d{yyyy-MM-dd HH:mm:ss.SSS}) %magenta([%-30thread]) %levelMark(%5level)
+                %boldWhite(%logger{5}\(%line\)) - %msg%n%rEx{full,
+                org.springframework,
+                sun.reflect,
+                org.apache,
+                com.google.gson,
+                java.lang.reflect,
+                java.util.concurrent,
+                java.lang.Thread
+                io.reactivex,
+                retrofit2
+                }
+            </pattern>
+        </encoder>
+        <!--whiteList logger. go check the WhiteListFilter.kt-->
+        <filter class="org.spring.base.util.logger.filter.WhiteListFilter">
+            <prefix>add.prefix.white.list.that.you.wanna.logging</prefix>
+
+            <prefix>org.flywaydb.core.internal.scanner.Scanner</prefix>
+            <prefix>org.flywaydb.core.internal.sqlscript.ParserSqlScript</prefix>
+            <prefix>org.springframework.web.servlet.DispatcherServlet</prefix>
+            <prefix>org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor</prefix>
+            <prefix>org.springframework.orm.jpa.JpaTransactionManager</prefix>
+
+            <thresholdLevel>INFO</thresholdLevel>
+        </filter>
+        <!--whiteList logger. go check the BlackListFilter.kt-->
+        <filter class="org.spring.base.util.logger.filter.BlackListFilter">
+            <prefix>add.prefix.black.list.that.you.dont.wanna.logging</prefix>
+        </filter>
+    </appender>
+    <appender name="FILE_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${user.dir}/logs/debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/logs/debug.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>1GB</maxFileSize>
+            <maxHistory>40</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-22thread] %5level %logger{5}\(%line\) - %msg%n%rEx{full,
+                org.springframework,
+                sun.reflect,
+                org.apache,
+                com.google.gson,
+                java.lang.reflect,
+                java.util.concurrent,
+                java.lang.Thread
+                io.reactivex,
+                retrofit2
+                }
+            </pattern>
+        </encoder>
+
+        <filter class="org.spring.base.util.logger.filter.WhiteListFilter">
+            <prefix>add.prefix.white.list.that.you.wanna.see.in.console</prefix>
+
+            <prefix>org.flywaydb.core.internal.scanner.Scanner</prefix>
+            <prefix>org.flywaydb.core.internal.sqlscript.ParserSqlScript</prefix>
+            <prefix>org.springframework.web.servlet.DispatcherServlet</prefix>
+            <prefix>org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor</prefix>
+            <prefix>org.springframework.orm.jpa.JpaTransactionManager</prefix>
+
+            <thresholdLevel>INFO</thresholdLevel>
+        </filter>
+        <filter class="org.spring.base.util.logger.filter.BlackListFilter">
+            <prefix>add.prefix.black.list.that.you.dont.wanna.see.in.console</prefix>
+        </filter>
+    </appender>
+
+    <root>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_DEBUG"/>
+    </root>
+</configuration>
