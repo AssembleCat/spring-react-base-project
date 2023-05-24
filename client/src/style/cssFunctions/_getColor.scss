@@ -1,0 +1,37 @@
+$base-color: (
+        primary: #ff1100,
+        background: #f4cccc,
+        black: #000000,
+        white: #ffffff,
+        black-light: #1f1f1f,
+        border-light: #e5e5e5,
+        border-dark: rgba(black, 0.2),
+        indicator: #b8b8b8,
+        transparent: transparent,
+);
+
+@function getBaseColor($find-color: black) {
+  $is-valid-color: index(map-keys($base-color), $find-color);
+  @if ($is-valid-color) {
+    @return map-get($base-color, $find-color);
+  }
+  @error "base-color에는 #{$find-color} 색상이 존재하지 않습니다.";
+  @return map-get($base-color, black);
+}
+
+$color: (
+        primary: getBaseColor(primary),
+        white: getBaseColor(white),
+        black: getBaseColor(black),
+        default: getBaseColor(black),
+        text: getBaseColor(black),
+);
+
+@function getColor($find-color: black) {
+  $is-valid-color: index(map-keys($color), $find-color);
+  @if ($is-valid-color) {
+    @return map-get($color, $find-color);
+  }
+  @error "color에는 #{$find-color} 색상이 존재하지 않습니다.";
+  @return map-get($color, default);
+}
