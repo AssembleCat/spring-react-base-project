@@ -35,6 +35,8 @@ dependencies {
     api("org.springdoc:springdoc-openapi-ui:1.6.15")
     api("org.springdoc:springdoc-openapi-webmvc-core:1.6.15")
 
+    // Gson
+    api("com.google.code.gson:gson")
 
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

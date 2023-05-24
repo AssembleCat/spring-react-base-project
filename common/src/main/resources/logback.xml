@@ -8,7 +8,7 @@
     <property name="HOME_LOG" value="logs/app.log"/>
 
     <!--log color highlight. go check the LevelHighlight.kt-->
-    <conversionRule conversionWord="levelMark" converterClass="org.spring.base.util.logger.conversion.LevelHighlight"/>
+    <conversionRule conversionWord="levelMark" converterClass="org.spring.base.common.util.logger.conversion.LevelHighlight"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -28,7 +28,7 @@
             </pattern>
         </encoder>
         <!--whiteList logger. go check the WhiteListFilter.kt-->
-        <filter class="org.spring.base.util.logger.filter.WhiteListFilter">
+        <filter class="org.spring.base.common.util.logger.filter.WhiteListFilter">
             <prefix>add.prefix.white.list.that.you.wanna.logging</prefix>
 
             <prefix>org.flywaydb.core.internal.scanner.Scanner</prefix>
@@ -40,7 +40,7 @@
             <thresholdLevel>INFO</thresholdLevel>
         </filter>
         <!--whiteList logger. go check the BlackListFilter.kt-->
-        <filter class="org.spring.base.util.logger.filter.BlackListFilter">
+        <filter class="org.spring.base.common.util.logger.filter.BlackListFilter">
             <prefix>add.prefix.black.list.that.you.dont.wanna.logging</prefix>
         </filter>
     </appender>
@@ -66,7 +66,7 @@
             </pattern>
         </encoder>
 
-        <filter class="org.spring.base.util.logger.filter.WhiteListFilter">
+        <filter class="org.spring.base.common.util.logger.filter.WhiteListFilter">
             <prefix>add.prefix.white.list.that.you.wanna.see.in.console</prefix>
 
             <prefix>org.flywaydb.core.internal.scanner.Scanner</prefix>
@@ -77,7 +77,7 @@
 
             <thresholdLevel>INFO</thresholdLevel>
         </filter>
-        <filter class="org.spring.base.util.logger.filter.BlackListFilter">
+        <filter class="org.spring.base.common.util.logger.filter.BlackListFilter">
             <prefix>add.prefix.black.list.that.you.dont.wanna.see.in.console</prefix>
         </filter>
     </appender>
