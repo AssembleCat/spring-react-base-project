@@ -24,13 +24,13 @@ class SpringAsyncConfig(
 
     @Bean(name = ["threadPoolTaskExecutor"], destroyMethod = "destroy")
     fun threadPoolTaskExecutor(): ExecutorHandler = ThreadPoolTaskExecutor().apply {
-        log.debug("Creating Async Task Executor")
-        val asyncManagerConf =
-            projectConfigurationInformation.asyncManager ?: throw IllegalStateException("asyncManager is null")
-            corePoolSize = asyncManagerConf.corePoolSize
-            maxPoolSize = asyncManagerConf.maxPoolSize
-            queueCapacity = asyncManagerConf.queueCapacity
-            threadNamePrefix = asyncManagerConf.threadNamePrefix
+        log.debug("Creating Async Task Executor... Selected Conf from: ${projectConfigurationInformation::class.qualifiedName}")
+
+        val asyncManagerConf = projectConfigurationInformation.asyncManager ?: throw IllegalStateException("asyncManager is null")
+        corePoolSize = asyncManagerConf.corePoolSize
+        maxPoolSize = asyncManagerConf.maxPoolSize
+        queueCapacity = asyncManagerConf.queueCapacity
+        threadNamePrefix = asyncManagerConf.threadNamePrefix
         initialize()
     }.let { ExecutorHandler(it) }
 
