@@ -1,4 +1,3 @@
-# Phase must be a CamelCase
 # Production
 phase: production
 version: 0.0.1
