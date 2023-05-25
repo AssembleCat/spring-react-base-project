@@ -23,25 +23,25 @@ import java.nio.file.Paths
  */
 @Configuration
 class ApplicationMetadataConfig(
-    private val objectMapper: ObjectMapper,
+    private val objectMapper: ObjectMapper
 ) {
     @Bean
     fun versionInformation(): VersionInformation {
-        // Import version.yaml inside resources classpath
         val version = loadResource("version.yaml")
-        // version.yaml have multiple documents in single file
-        // So we need to parse it as a list
         val currentProfile = System.getProperty("spring.profiles.active")
-        return Yaml().loadAll(version).map { objectMapper.convertValue(it, VersionInformation::class.java) }
+
+        val versions = Yaml().loadAll(version) as Iterable<*>
+        val versionInformation = versions.map { objectMapper.convertValue(it, VersionInformation::class.java) }
             .firstOrNull { it.phase == currentProfile }
-            ?: throw Exception("version.yaml for this profile not found: $currentProfile")
+
+        return versionInformation ?: throw Exception("version.yaml for this profile not found: $currentProfile")
     }
 
     @Bean
     fun projectInformation(): ProjectInformation {
         val rawInfo = loadResource("project.yaml")
-        return Yaml().load<LinkedHashMap<*, *>>(rawInfo)
-            .let { return objectMapper.convertValue(it, ProjectInformation::class.java) }
+        val projectInformationMap = Yaml().load(rawInfo) as Map<*, *>
+        return objectMapper.convertValue(projectInformationMap, ProjectInformation::class.java)
     }
 
     private fun loadResource(filePath: String): String {
@@ -49,10 +49,9 @@ class ApplicationMetadataConfig(
         val file = resource.file
 
         return try {
-            Files.readAllLines(Paths.get(file.toURI()), StandardCharsets.UTF_8).joinToString("\n")
+            String(Files.readAllBytes(Paths.get(file.toURI())), StandardCharsets.UTF_8)
         } catch (e: Exception) {
             throw RuntimeException("Failed to read resource: $filePath", e)
         }
     }
-
 }
