@@ -49,8 +49,7 @@ data class DeployData(
 val deployTypes: Map<String, DeployData> = mapOf(
     "alpha" to DeployData(Phase.ALPHA),
     "alphaForce" to DeployData(Phase.ALPHA),
-    "production" to DeployData(Phase.PRODUCTION),
-    "productionTest" to DeployData(Phase.PRODUCTION_TEST),
+    "production" to DeployData(Phase.PRODUCTION)
 )
 
 tasks.register("execute") {
