@@ -39,7 +39,7 @@
 
             <thresholdLevel>INFO</thresholdLevel>
         </filter>
-        <!--whiteList logger. go check the BlackListFilter.kt-->
+        <!--blackList logger. go check the BlackListFilter.kt-->
         <filter class="org.spring.base.common.util.logger.filter.BlackListFilter">
             <prefix>add.prefix.black.list.that.you.dont.wanna.logging</prefix>
         </filter>
