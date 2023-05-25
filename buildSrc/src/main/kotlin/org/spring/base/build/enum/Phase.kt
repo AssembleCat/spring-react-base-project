@@ -4,5 +4,4 @@ enum class Phase(val branchRegex: String) {
     LOCAL("*"),
     ALPHA("\$develop*^"),
     PRODUCTION("\$master^"),
-    PRODUCTION_TEST("\$master^"),
 }
