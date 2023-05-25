@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "Noto Sans CJK KR";
+  src: url("/asset/fonts/NotoSansCJKkr-Bold.otf") format("opentype");
+}
+
+.modal-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eaeaea;
+  border-top-right-radius: 24px;
+  border-top-left-radius: 24px;
+  width: 1000px;
+  height: 129px;
+  margin-bottom: 60px;
+}
+
+.modal-header-text {
+  font-family: "Noto Sans CJK KR", serif;
+  font-size: 46px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  text-align: center;
+  color: black;
+}
