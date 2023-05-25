@@ -1,4 +1,4 @@
-package org.spring.base.common.types.master
+package org.spring.base.common.types.master.book
 
 /**
  * BookType(장르) 종류

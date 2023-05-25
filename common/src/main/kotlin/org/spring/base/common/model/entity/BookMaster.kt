@@ -1,6 +1,6 @@
 package org.spring.base.common.model.entity
 
-import org.spring.base.common.types.master.BookType
+import org.spring.base.common.types.master.book.BookType
 import java.io.Serializable
 import javax.persistence.*
 
