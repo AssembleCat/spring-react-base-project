@@ -16,11 +16,11 @@ const Text: React.FC<TextProps> = ({
                                        clickEvent,
                                    }) => {
     const defaultText = (text !== null && text !== undefined) ? String(text) : "";
-    const splitedText = defaultText.split("\n");
+    const splitText = defaultText.split("\n");
 
     return (
         <div className={containerClassName}>
-            {splitedText.map((text, index) => (
+            {splitText.map((text, index) => (
                 <p
                     key={index}
                     className={textClassName}
