@@ -17,6 +17,7 @@ dependencies {
 
     // AWS
     implementation("com.amazonaws:aws-java-sdk-s3:1.11.73")
+    implementation("com.amazonaws:aws-java-sdk-ecr:1.11.73")
 
     // Retrofit
     api("com.squareup.retrofit2:retrofit:2.7.2")

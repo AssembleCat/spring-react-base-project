@@ -1,5 +1,6 @@
 plugins {
     kotlin("plugin.jpa")
+    application
 }
 
 version = "unspecified"
@@ -8,7 +9,10 @@ repositories {
     mavenCentral()
 }
 
-// === Dependencies ===
+application {
+    mainClass.set("${project.properties["project.group"] as String}.ApplicationKt")
+}
+
 dependencies {
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -18,14 +22,17 @@ dependencies {
     // Spring Data JPA
     api("org.springframework.boot:spring-boot-starter-data-jpa")
 
-    // Hibernate
-    implementation("org.hibernate:hibernate-core:6.1.7.Final")
-    implementation("org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final")
-
     // Jackson
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.14.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.2")
+
+    // Hibernate
+    api ("org.hibernate:hibernate-spatial")
+
+    // Lombok
+    compileOnly("org.projectlombok:lombok:1.18.30")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:1.4.6")
@@ -39,7 +46,7 @@ dependencies {
     api("com.google.code.gson:gson")
 
     // retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    api("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")

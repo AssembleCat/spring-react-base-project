@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    application
 }
 
 group = "org.spring.base"
@@ -9,9 +10,12 @@ repositories {
     mavenCentral()
 }
 
+application {
+    mainClass.set("${project.properties["project.group"] as String}.ApplicationKt")
+}
+
 dependencies {
     api(project(":common"))
-    // Add here for your core dependency. show me what you got!
 }
 
 tasks.test {

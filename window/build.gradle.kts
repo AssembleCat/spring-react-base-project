@@ -1,3 +1,6 @@
+import org.spring.base.build.enum.Phase
+import org.spring.base.build.util.phase
+
 plugins {
     id("java")
 
@@ -16,17 +19,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jetty")
     // spring boot devtools
     implementation("org.springframework.boot:spring-boot-devtools")
-    // spring boot websocket
-    //implementation("org.springframework.boot:spring-boot-starter-websocket")
 
-    // SQL server driver
-    implementation("com.microsoft.sqlserver:mssql-jdbc:12.2.0.jre11") // DB 변경/JDK 버전 11 아래일 시 변경
-
-    // H2
-    //implementation("com.h2database:h2:2.1.214") // DB 미설치 환경에서 사용
+    // MySQL
+    runtimeOnly("mysql:mysql-connector-java:8.0.32")
 
     // Flyway
     implementation("org.flywaydb:flyway-core:7.15.0") // Flyway migration을 SQLServer 버전과 같이 변경할 것
+    implementation("org.flywaydb:flyway-mysql")
     //implementation("org.flywaydb:flyway-sqlserver") // DB 변경 시 같이 변경
 
     // Spring security
@@ -39,9 +38,31 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 }
 
-repositories {
-    mavenCentral()
+// Gradle clean 옵션 없이 빌드가능하도록 설정
+tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
-kotlin {
-    jvmToolchain(11)
+
+// ProcessResource - copy "Metadata" information to classpath
+tasks.getByName<ProcessResources>("processResources") {
+    //dependsOn("buildFront")
+    val s = System.getProperty("file.separator")
+    from("${project.rootDir}${s}metadata") { into("/metadata") }
+    from("${project.rootDir}${s}migration") { into("/migration") }
+
+    dependsOn("buildFront")
+}
+
+task("buildFront", Copy::class) {
+    val currentPhase = project.phase
+    when (currentPhase) {
+        Phase.ALPHA,
+        Phase.LOCAL -> dependsOn(project(":client").tasks.getByName("yarnBuildStaging"))
+
+        Phase.PRODUCTION -> dependsOn(project(":client").tasks.getByName("yarnBuild"))
+    }
+    // Delete the old files
+    delete("${project.projectDir}/src/main/resources/static")
+    from("${project.rootDir}/client/dist")
+    into("${project.projectDir}/src/main/resources/static")
 }
